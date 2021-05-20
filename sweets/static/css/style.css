@@ -1,0 +1,51 @@
+/*With Simple Caption*/
+.column#caption {
+    position: relative;
+}
+
+.column#caption img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.column#caption:hover img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.column#caption .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.8s ease;
+    font-size: 40px;
+    margin: 0;
+    color: black;
+    font-family: "Cambria", serif;
+    -webkit-text-stroke-color: #cff4fc;
+    -webkit-text-stroke-width: .3px;
+}
+.column#caption:hover .text {
+    opacity: 1;
+}
+
+#header-color{
+    background: #F4F2F1;
+}
+.column#caption .btn-text{
+    background: rgba(244, 242, 241, .5);
+    border-radius: 10px;
+}
+#header-text{
+    font-family: "Cambria", serif;
+    font-size: 16px;
+}
+
+li{
+    list-style-type: none;
+}

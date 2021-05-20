@@ -1,0 +1,35 @@
+{% extends 'sweets/base.html' %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block nav %}
+    {% include 'sweets/menu.html' %}
+{% endblock %}
+
+{% block main %}
+    <img src="{% static 'images/header.png' %}" class="img-fluid" width="100%" alt="...">
+{% endblock main %}
+
+{% block content %}
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for el in category %}
+                    <div class="col-sm">
+                        <div class="card">
+                            <a href="{{ el.get_absolute_url }}" class="column col-xs-6" id="caption">
+                                <button class="btn-text text">
+                                    <strong>{{ el.title }}</strong></button>
+                                <img src="{{ el.image.url }}"
+                                     class="card-img-top"
+                                     width="auto" height="300"
+                                     alt="{{ el.title }}"
+                                     title="{{ el.title }}"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
