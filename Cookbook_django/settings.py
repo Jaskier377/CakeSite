@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'sweets',
+    'comments'
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'sweets/static'),
+    os.path.join(BASE_DIR, 'comments/static'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

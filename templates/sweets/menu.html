@@ -22,11 +22,11 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Отзывы</a>
+                    <a class="nav-link" href="{% url 'comments' %}">Отзывы</a>
                 </li>
                 {% menu_category %}
             </ul>
-            <span class="navbar-text nav-link">
+            <span>
                 {% if request.user.is_authenticated %}
                     <p>Вы зашли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a></p>
                 {% else %}
