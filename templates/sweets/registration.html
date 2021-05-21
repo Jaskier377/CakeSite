@@ -1,0 +1,26 @@
+{% extends 'sweets/base.html' %}
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block nav %}
+    {% include 'sweets/menu.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="row-cols-sm-3">
+        <div class="col-4 offset-4">
+            <h1>Регистрация</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block reklama %}
+
+{% endblock reklama %}
