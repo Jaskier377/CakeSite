@@ -24,11 +24,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'comments' %}">Отзывы</a>
                 </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_comment' %}">Оставить отзыв</a>
+                </li>
+                {% endif %}
                 {% menu_category %}
             </ul>
-            <span>
+            <span class="navbar-text">
                 {% if request.user.is_authenticated %}
-                    <p>Вы зашли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a></p>
+                    <p>Вы вошли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a></p>
                 {% else %}
                     <a href="{% url 'registration' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a>
                 {% endif %}

@@ -1,0 +1,27 @@
+{% extends 'sweets/base.html' %}
+{% block title %}
+    Оставить отзыв
+{% endblock %}
+{% block nav %}
+    {% include 'sweets/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="row-cols-sm-3">
+        <div class="col-4"></div>
+        <div class="col-4 offset-4">
+            <h1>Оставить отзыв</h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Оставить отзыв</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+{% endblock %}
+
+{% block reklama %}
+
+{% endblock %}
