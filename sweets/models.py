@@ -6,7 +6,7 @@ class Cake(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
     description = models.CharField(max_length=200, verbose_name='Краткое описание')
     text = models.TextField(verbose_name='Полное описание')
-    image = models.ImageField(upload_to='photos/%y/%m/%d/', verbose_name='Фото')
+    image = models.ImageField(upload_to='photos/%y/%m/%d/', verbose_name='Фото', null=True)
     category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL, verbose_name='Категория')
 
     def get_absolute_url(self):

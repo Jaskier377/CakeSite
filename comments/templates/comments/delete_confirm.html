@@ -1,0 +1,34 @@
+{% extends 'sweets/base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block nav %}
+    {% include 'sweets/menu.html' %}
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row row-cols-sm-4">
+        <div class="col-sm-6 offset-sm-3">
+            <div class="content-section">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Удалить отзыв</legend>
+                        <h2>Вы уверены что хотите удалить отзыв?</h2>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger" type="submit">Да, удалить</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'comments' %}">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block reklama %}
+
+{% endblock %}

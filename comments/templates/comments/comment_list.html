@@ -20,10 +20,15 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">{{ comment.text|linebreaksbr|truncatewords:50 }}</p>
-                    <a href="{{ comment.get_absolute_url }}" class="btn btn-outline-secondary btn-sm">Читать полностью</a>
+
                 </div>
                 <div class="card-footer text-muted" id="header-color">
                     {{ comment.created_at }}
+                    <a href="{{ comment.get_absolute_url }}" class="btn btn-outline-secondary btn-sm">Читать полностью</a>
+                    {% if comment.author.username == user.username %}
+                    <a href="{% url 'update_comment' comment.id %}" class="btn btn-outline-success btn-sm">Изменить отзыв</a>
+                    <a href="{% url 'delete_comment' comment.id %}" class="btn btn-outline-danger btn-sm">Удалить отзыв</a>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

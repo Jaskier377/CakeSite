@@ -32,7 +32,7 @@
                 {% menu_category %}
             </ul>
             <span class="navbar-text">
-                {% if request.user.is_authenticated %}
+                {% if user.is_authenticated %}
                     <p>Вы вошли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a></p>
                 {% else %}
                     <a href="{% url 'registration' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import Cake, Category
 from rest_framework import viewsets
-from .serializers import CakeSerializer, CategorySerializer
+# from .serializers import CakeSerializer, CategorySerializer
 from .forms import RegisterUserForm, UserLoginForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -13,9 +13,9 @@ def registration(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            # login(request, user)
             messages.success(request, 'Вы зарегестрировались')
-            return redirect('home')
+            return redirect('login')
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
@@ -40,14 +40,14 @@ def user_logout(request):
     return redirect('login')
 
 
-class CakeViewSet(viewsets.ModelViewSet):
-    queryset = Cake.objects.all()
-    serializer_class = CakeSerializer
-
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+# class CakeViewSet(viewsets.ModelViewSet):
+#     queryset = Cake.objects.all()
+#     serializer_class = CakeSerializer
+#
+#
+# class CategoryViewSet(viewsets.ModelViewSet):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
 
 
 class HomePage(ListView):

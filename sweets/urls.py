@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import HomePage, CakeByCategory, CakeDetail, CakeViewSet, CategoryViewSet, registration, user_login, \
+from .views import HomePage, CakeByCategory, CakeDetail, registration, user_login, \
     user_logout
 
-router = routers.DefaultRouter()
-router.register('cakes', CakeViewSet)
-router.register('categories', CategoryViewSet)
+# router = routers.DefaultRouter()
+# router.register('cakes', CakeViewSet)
+# router.register('categories', CategoryViewSet)
 
 urlpatterns = [
     path('registration/', registration, name='registration'),
@@ -16,6 +16,6 @@ urlpatterns = [
     path('sweets/<int:category_id>', CakeByCategory.as_view(), name='cake_by_category'),
     path('cake/<int:pk>', CakeDetail.as_view(), name='cake_detail'),
 
-    path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # path('api/', include(router.urls)),
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
