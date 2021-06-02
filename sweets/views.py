@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.views import PasswordChangeView
 from .models import Cake, Category
 from rest_framework import viewsets
 # from .serializers import CakeSerializer, CategorySerializer
 from .forms import RegisterUserForm, UserLoginForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import UserChangePasswordForm
 
 
 def registration(request):
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            # login(request, user)
+            form.save()
             messages.success(request, 'Вы зарегестрировались')
             return redirect('login')
         else:
@@ -48,6 +50,12 @@ def user_logout(request):
 # class CategoryViewSet(viewsets.ModelViewSet):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
+
+
+class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+    form_class = UserChangePasswordForm
+    template_name = 'sweets/pass_change.html'
+    success_url = '/'
 
 
 class HomePage(ListView):

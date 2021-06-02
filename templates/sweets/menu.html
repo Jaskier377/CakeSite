@@ -25,15 +25,26 @@
                     <a class="nav-link" href="{% url 'comments' %}">Отзывы</a>
                 </li>
                 {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_comment' %}">Оставить отзыв</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_comment' %}">Оставить отзыв</a>
+                    </li>
                 {% endif %}
                 {% menu_category %}
             </ul>
             <span class="navbar-text">
                 {% if user.is_authenticated %}
-                    <p>Вы вошли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a></p>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Вы вошли как {{ user }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Выход</a></li>
+                                <li><a class="dropdown-item" href="{% url 'change_pass' %}">Сменить пароль</a></li>
+                        </ul>
+                    </li>
+{#                    <p>Вы вошли как {{ user.username }} | <a href="{% url 'logout' %}">Выход</a> | <a#}
+{#                            href="{% url 'change_pass' %}">Сменить пароль</a></p>#}
                 {% else %}
                     <a href="{% url 'registration' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a>
                 {% endif %}
