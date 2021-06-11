@@ -1,62 +1,23 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import AddComment
-from django import forms
+from .serializers import CommentSerializer
 from .models import Comment
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework import permissions
 
 
-class CommentsView(ListView):
-    model = Comment
-    template_name = 'comments/comment_list.html'
-    context_object_name = 'comments'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Комментарии'
-        return context
+class CommentList(ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class CommentDetailView(DetailView):
-    model = Comment
-    context_object_name = 'comment'
+class CommentDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class CommentCreateView(LoginRequiredMixin, CreateView):
-    form_class = AddComment
-    template_name = 'comments/add_comment.html'
+class CommentsByAuthor(ListAPIView):
+    serializer_class = CommentSerializer
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-
-class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Comment
-    form_class = AddComment
-    template_name = 'comments/update_comment.html'
-    success_url = '/comments/'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        comment = self.get_object()
-        if self.request.user == comment.author:
-            return True
-        else:
-            return False
-
-
-class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Comment
-    template_name = 'comments/delete_confirm.html'
-    success_url = '/'
-
-    def test_func(self):
-        comment = self.get_object()
-        if self.request.user == comment.author:
-            return True
-        else:
-            return False
+    def get_queryset(self):
+        return Comment.objects.filter(author_id=self.kwargs['author_id'])

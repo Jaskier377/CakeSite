@@ -1,11 +1,9 @@
-from django.urls import path, include
-from rest_framework import routers
-from .views import CommentsView, CommentDetailView, CommentCreateView, CommentUpdateView, CommentDeleteView
+from django.urls import path
+from .views import CommentList, CommentDetail, CommentsByAuthor
 
 urlpatterns = [
-    path('', CommentsView.as_view(), name='comments'),
-    path('<int:pk>/', CommentDetailView.as_view(), name='comment_detail'),
-    path('add_comment/', CommentCreateView.as_view(), name='add_comment'),
-    path('<int:pk>/change',CommentUpdateView.as_view(), name='update_comment'),
-    path('<int:pk>/delete',CommentDeleteView.as_view(), name='delete_comment'),
+    path('', CommentList.as_view()),
+    path('detail/<int:pk>/', CommentDetail.as_view()),
+    path('by_author/<int:author_id>/', CommentsByAuthor.as_view())
+
 ]
