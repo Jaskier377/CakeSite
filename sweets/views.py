@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import PasswordChangeView
 from .models import Cake, Category
-from rest_framework import viewsets
-# from .serializers import CakeSerializer, CategorySerializer
 from .forms import RegisterUserForm, UserLoginForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -40,16 +38,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
-
-
-# class CakeViewSet(viewsets.ModelViewSet):
-#     queryset = Cake.objects.all()
-#     serializer_class = CakeSerializer
-#
-#
-# class CategoryViewSet(viewsets.ModelViewSet):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
 
 
 class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
