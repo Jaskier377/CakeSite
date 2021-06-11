@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import PasswordChangeView
 from .models import Cake, Category
-from rest_framework import viewsets
-# from .serializers import CakeSerializer, CategorySerializer
 from .forms import RegisterUserForm, UserLoginForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserChangePasswordForm
+
+from .serializers import CakeSerializer, CategorySerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
 def registration(request):
@@ -42,16 +43,6 @@ def user_logout(request):
     return redirect('login')
 
 
-# class CakeViewSet(viewsets.ModelViewSet):
-#     queryset = Cake.objects.all()
-#     serializer_class = CakeSerializer
-#
-#
-# class CategoryViewSet(viewsets.ModelViewSet):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
-
-
 class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = UserChangePasswordForm
     template_name = 'sweets/pass_change.html'
@@ -63,7 +54,7 @@ class HomePage(ListView):
     template_name = 'sweets/index.html'
     context_object_name = 'category'
 
-    # paginate_by = 3
+    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,3 +85,27 @@ class CakeDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = Cake.objects.get(pk=self.kwargs['pk'])
         return context
+
+
+###################
+## REST-API VIEW ##
+###################
+
+class CakeListApi(ListCreateAPIView):
+    queryset = Cake.objects.all()
+    serializer_class = CakeSerializer
+
+
+class CakeDetailApi(RetrieveUpdateDestroyAPIView):
+    queryset = Cake.objects.all()
+    serializer_class = CakeSerializer
+
+
+class CategoryListApi(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
