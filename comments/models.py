@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 class Comment(models.Model):
     text = models.TextField(verbose_name='Текст отзыва')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', verbose_name='Автор')
 
     def get_absolute_url(self):
         return reverse_lazy('comment_detail', kwargs={'pk': self.pk})
