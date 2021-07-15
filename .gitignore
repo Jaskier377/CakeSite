@@ -6,3 +6,5 @@ __pycache__
 .pytest_cache
 Cookbook_django/.env
 db.sqlite3
+media_root
+media
