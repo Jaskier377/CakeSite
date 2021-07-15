@@ -1,8 +1,6 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import AddComment
-from django import forms
 from .models import Comment
 
 
@@ -13,7 +11,7 @@ class CommentsView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Комментарии'
+        context['title'] = 'Отзывы'
         return context
 
 

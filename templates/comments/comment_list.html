@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block nav %}
+    {% include 'sweets/menu.html' %}
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row row-cols-sm-4">
+        <div class="col-sm-6 offset-sm-3">
+            {% for comment in comments %}
+            <div class="card">
+                <div class="card-header" id="header-color">
+                    {{ comment.author }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ comment.text|linebreaksbr|truncatewords:50 }}</p>
+
+                </div>
+                <div class="card-footer text-muted" id="header-color">
+                    {{ comment.created_at }}
+                    <a href="{{ comment.get_absolute_url }}" class="btn-outline-secondary btn-sm">Читать полностью</a>
+                    {% if comment.author.id == user.id %}
+                    <a href="{% url 'update_comment' comment.id %}" class="btn-outline-secondary btn-sm">Изменить отзыв</a>
+                    <a href="{% url 'delete_comment' comment.id %}" class="btn-outline-secondary btn-sm">Удалить отзыв</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block reklama %}
+
+{% endblock %}

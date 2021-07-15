@@ -1,0 +1,44 @@
+{% load menu %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" id="header-color">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+				aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+			<span><img src="{% static 'images/cake.png' %}" width="30" alt=""></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'comments' %}">Отзывы</a>
+				</li>
+				{% if request.user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'add_comment' %}">Оставить отзыв</a>
+					</li>
+				{% endif %}
+				{% menu_category %}
+			</ul>
+			<span class="navbar-text">
+                {% if user.is_authenticated %}
+					<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+						   data-bs-toggle="dropdown" aria-expanded="false">
+                            Вы вошли как {{ user }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item"
+									   href="{% url 'account_change_password' %}">Сменить пароль</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_email' %}">Редактировать Email</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a></li>
+                        </ul>
+                    </li>
+				{% else %}
+					<a href="{% url 'account_signup' %}">Регистрация</a> | <a href="{% url 'account_login' %}">Вход</a>
+				{% endif %}
+      </span>
+		</div>
+	</div>
+</nav>

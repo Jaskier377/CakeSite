@@ -15,6 +15,6 @@ class Comment(models.Model):
         return self.author.username
 
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
         ordering = ['-created_at']

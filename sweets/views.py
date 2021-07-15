@@ -1,57 +1,11 @@
-from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-from django.contrib.auth.views import PasswordChangeView
 from .models import Cake, Category
-from .forms import RegisterUserForm, UserLoginForm
-from django.contrib import messages
-from django.contrib.auth import login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import UserChangePasswordForm
-
-
-def registration(request):
-    if request.method == 'POST':
-        form = RegisterUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы зарегестрировались')
-            return redirect('login')
-        else:
-            messages.error(request, 'Ошибка регистрации')
-    else:
-        form = RegisterUserForm()
-    return render(request, 'sweets/registration.html', {'form': form})
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserLoginForm()
-    return render(request, 'sweets/login.html', {'form': form})
-
-
-def user_logout(request):
-    logout(request)
-    return redirect('login')
-
-
-class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
-    form_class = UserChangePasswordForm
-    template_name = 'sweets/pass_change.html'
-    success_url = '/'
 
 
 class HomePage(ListView):
     model = Category
     template_name = 'sweets/index.html'
     context_object_name = 'category'
-
-    # paginate_by = 3
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -66,11 +20,11 @@ class CakeByCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = Category.objects.get(pk=self.kwargs['category_id'])
+        context['title'] = Category.objects.get(slug=self.kwargs['slug'])
         return context
 
     def get_queryset(self):
-        return Cake.objects.filter(category_id=self.kwargs['category_id'])
+        return Cake.objects.filter(slug=self.kwargs['slug'])
 
 
 class CakeDetail(DetailView):
@@ -80,5 +34,5 @@ class CakeDetail(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = Cake.objects.get(pk=self.kwargs['pk'])
+        context['title'] = Cake.objects.get(slug=self.kwargs['slug'])
         return context
