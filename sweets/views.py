@@ -24,7 +24,7 @@ class CakeByCategory(ListView):
         return context
 
     def get_queryset(self):
-        return Cake.objects.filter(slug=self.kwargs['slug'])
+        return Cake.objects.filter(category=Category.objects.get(slug=self.kwargs['slug']))
 
 
 class CakeDetail(DetailView):
